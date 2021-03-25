@@ -6,7 +6,7 @@ class Site {
 
     public const NAME = "Jahidul Pabel Islam";
 
-    public const ROLE = "Full Stack Developer";
+    public const JOB = "Full Stack Developer";
 
     public const COLOUR = "#0078c9";
 
