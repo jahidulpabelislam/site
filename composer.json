@@ -3,7 +3,7 @@
     "description": "Personal library to hold reusable bits for my sites",
     "autoload": {
         "psr-4": {
-            "JPI\\Site\\": "src/"
+            "JPI\\": "src/"
         }
     }
 }
