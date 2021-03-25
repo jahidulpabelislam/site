@@ -10,6 +10,10 @@ class Site
 
     public const COLOUR = "#0078c9";
 
+    public const SOCIAL_GITHUB = "jahidulpabelislam";
+    public const SOCIAL_INSTAGRAM = "jpi.dev";
+    public const SOCIAL_LINKEDIN = "jahidulpabelislam";
+
     public static function asset(string $src, string $ver = null, string $root = SITE_ROOT): string {
         if ($ver === null) {
             $ver = "1"; // Default
