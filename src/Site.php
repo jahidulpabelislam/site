@@ -2,8 +2,8 @@
 
 namespace JPI;
 
-class Site
-{
+class Site {
+
     public const NAME = "Jahidul Pabel Islam";
 
     public const ROLE = "Full Stack Developer";
@@ -13,6 +13,18 @@ class Site
     public const SOCIAL_GITHUB = "jahidulpabelislam";
     public const SOCIAL_INSTAGRAM = "jpi.dev";
     public const SOCIAL_LINKEDIN = "jahidulpabelislam";
+
+    private static $instance;
+
+    protected $environment = null;
+
+    public static function get() {
+        if (!static::$instance) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
 
     public static function asset(string $src, string $ver = null, string $root = SITE_ROOT): string {
         if ($ver === null) {
@@ -38,5 +50,17 @@ class Site
 
     public function renderFavicons() {
         include_once(__DIR__ . "/../assets/favicons.php");
+    }
+
+    public function getEnvironment(): string {
+        if ($this->environment == null) {
+            $this->environment = getenv("APPLICATION_ENV") ?? "production";
+        }
+
+        return $this->environment;
+    }
+
+    public function isProduction(): bool {
+        return $this->getEnvironment() === "production";
     }
 }
