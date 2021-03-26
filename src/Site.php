@@ -26,7 +26,7 @@ class Site {
         return static::$instance;
     }
 
-    public static function asset(string $src, string $ver = null, string $root = SITE_ROOT): string {
+    public static function asset(string $src, string $ver = null, string $root = WEB_ROOT): string {
         if ($ver === null) {
             $ver = "1"; // Default
 
