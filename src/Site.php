@@ -49,7 +49,10 @@ class Site {
     }
 
     public function renderFavicons() {
+        ob_start();
         include_once(__DIR__ . "/../assets/favicons.php");
+        $favicons = ob_get_contents();
+        echo $favicons;
     }
 
     public function getEnvironment(): string {
