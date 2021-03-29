@@ -1,6 +1,9 @@
 {
     "name": "jpi/site",
     "description": "Personal library to hold reusable bits for my sites",
+    "require": {
+        "php": "^7.1"
+    },
     "autoload": {
         "psr-4": {
             "JPI\\": "src/"
