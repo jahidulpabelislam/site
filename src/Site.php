@@ -2,11 +2,15 @@
 
 namespace JPI;
 
+use DateTime;
+
 class Site {
 
     public const NAME = "Jahidul Pabel Islam";
 
     public const JOB = "Full Stack Developer";
+
+    public const START_DATE = "2010-10-04";
 
     public const COLOUR = "#0078c9";
 
@@ -17,6 +21,9 @@ class Site {
     private static $instance;
 
     protected $environment = null;
+
+    protected $dateStarted;
+    protected $yearStarted;
 
     public static function get() {
         if (!static::$instance) {
@@ -65,5 +72,22 @@ class Site {
 
     public function isProduction(): bool {
         return $this->getEnvironment() === "production";
+    }
+
+    public function getDateStarted(): DateTime {
+        if (!$this->dateStarted) {
+            $this->dateStarted = new DateTime(self::START_DATE);
+        }
+
+        return $this->dateStarted;
+    }
+
+    public function getYearStarted(): string {
+        if (!$this->yearStarted) {
+            $dateStartedDate = $this->getDateStarted();
+            $this->yearStarted = $dateStartedDate->format("Y");
+        }
+
+        return $this->yearStarted;
     }
 }
