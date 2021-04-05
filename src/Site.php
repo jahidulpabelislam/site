@@ -8,6 +8,8 @@ class Site {
 
     public const NAME = "Jahidul Pabel Islam";
 
+    public const DATE_OF_BIRTH = "1996-02-22";
+
     public const JOB = "Full Stack Developer";
 
     public const START_DATE = "2010-10-04";
