@@ -4,21 +4,9 @@ namespace JPI;
 
 use DateTime;
 
-class Site {
-
-    public const NAME = "Jahidul Pabel Islam";
-
-    public const DATE_OF_BIRTH = "1996-02-22";
-
-    public const JOB = "Full Stack Developer";
-
-    public const START_DATE = "2010-10-04";
+class Site implements Me {
 
     public const COLOUR = "#0078c9";
-
-    public const SOCIAL_GITHUB = "jahidulpabelislam";
-    public const SOCIAL_INSTAGRAM = "jahidulpabelislam";
-    public const SOCIAL_LINKEDIN = "jahidulpabelislam";
 
     private static $instance;
 
