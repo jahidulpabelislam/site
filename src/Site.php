@@ -34,10 +34,10 @@ class Site {
 
         $query = parse_url($src, PHP_URL_QUERY);
         if (empty($query)) {
-            return "{$src}?v={$ver}";
+            return "$src?v=$ver";
         }
 
-        return "{$src}&v={$ver}";
+        return "$src&v=$ver";
     }
 
     public function renderFavicons(): void {
