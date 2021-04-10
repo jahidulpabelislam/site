@@ -48,7 +48,7 @@ class Site {
     }
 
     public function getEnvironment(): string {
-        if ($this->environment == null) {
+        if ($this->environment === null) {
             $this->environment = getenv("APPLICATION_ENV") ?? "production";
         }
 
