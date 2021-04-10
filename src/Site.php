@@ -2,18 +2,15 @@
 
 namespace JPI;
 
-use DateTime;
-
 class Site implements Me {
+
+    use MeTrait;
 
     public const COLOUR = "#0078c9";
 
     private static $instance;
 
     protected $environment = null;
-
-    protected $dateStarted;
-    protected $yearStarted;
 
     public static function get() {
         if (!static::$instance) {
@@ -64,20 +61,4 @@ class Site implements Me {
         return $this->getEnvironment() === "production";
     }
 
-    public function getDateStarted(): DateTime {
-        if (!$this->dateStarted) {
-            $this->dateStarted = new DateTime(self::START_DATE);
-        }
-
-        return $this->dateStarted;
-    }
-
-    public function getYearStarted(): string {
-        if (!$this->yearStarted) {
-            $dateStartedDate = $this->getDateStarted();
-            $this->yearStarted = $dateStartedDate->format("Y");
-        }
-
-        return $this->yearStarted;
-    }
 }
