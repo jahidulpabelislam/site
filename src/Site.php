@@ -2,9 +2,7 @@
 
 namespace JPI;
 
-class Site implements Me {
-
-    use MeTrait;
+class Site {
 
     public const COLOUR = "#0078c9";
 
