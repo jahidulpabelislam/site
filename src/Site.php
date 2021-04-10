@@ -40,7 +40,7 @@ class Site {
         return "{$src}&v={$ver}";
     }
 
-    public function renderFavicons() {
+    public function renderFavicons(): void {
         ob_start();
         include_once(__DIR__ . "/../assets/favicons.php");
         $favicons = ob_get_contents();
