@@ -8,6 +8,7 @@ class Site implements Brand {
 
     protected $environment = null;
     protected $domain = null;
+    protected $currentURL = null;
 
     public static function get() {
         if (!static::$instance) {
@@ -68,6 +69,19 @@ class Site implements Brand {
         }
 
         return $this->domain;
+    }
+
+    /**
+     * Generate and return the current requested page/URL.
+     *
+     * @return string
+     */
+    public function getCurrentURL(): string {
+        if ($this->currentURL === null) {
+            $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+        }
+
+        return $this->currentURL;
     }
 
 }
