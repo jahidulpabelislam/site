@@ -2,9 +2,7 @@
 
 namespace JPI;
 
-class Site {
-
-    public const COLOUR = "#0078c9";
+class Site implements Brand {
 
     private static $instance;
 
