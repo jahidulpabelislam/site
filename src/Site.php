@@ -7,6 +7,8 @@ class Site implements Brand {
     private static $instance;
 
     protected $environment = null;
+    protected $useDevAssets = null;
+    protected $devAssetsKey = "dev_assets";
     protected $domain = null;
     protected $currentURL = null;
 
@@ -82,6 +84,19 @@ class Site implements Brand {
         }
 
         return $this->currentURL;
+    }
+
+    /**
+     * @return bool Whether or not the param was set by user on page view
+     */
+    public function useDevAssets(): bool {
+        if ($this->useDevAssets === null) {
+            $this->useDevAssets = isset($_GET[$this->devAssetsKey])
+                && !($_GET[$this->devAssetsKey] === "false" || $_GET[$this->devAssetsKey] === "0")
+            ;
+        }
+
+        return $this->useDevAssets;
     }
 
 }
