@@ -7,6 +7,7 @@ class Site implements Brand {
     private static $instance;
 
     protected $environment = null;
+    protected $domain = null;
 
     public static function get() {
         if (!static::$instance) {
@@ -55,6 +56,18 @@ class Site implements Brand {
 
     public function isProduction(): bool {
         return $this->getEnvironment() === "production";
+    }
+
+    /**
+     * @return string Generate and return the local domain
+     */
+    public function getDomain(): string {
+        if ($this->domain === null) {
+            $protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http";
+            $this->domain = "$protocol://" . $_SERVER["SERVER_NAME"];
+        }
+
+        return $this->domain;
     }
 
 }
