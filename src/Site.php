@@ -4,9 +4,7 @@ namespace JPI;
 
 class Site implements Brand {
 
-    use URLUtilities {
-        makeURL as makeURLTrait;
-    }
+    use URLUtilities;
 
     private static $instance;
 
@@ -88,7 +86,7 @@ class Site implements Brand {
     public function makeURL(string $relativeURL, bool $isFull = false, bool $addDevAssetsParam = true) : string {
         $domain = $isFull ? $this->getDomain() : "";
 
-        $url = static::makeURLTrait($domain, $relativeURL);
+        $url = static::formatURL($domain, $relativeURL);
 
         if ($addDevAssetsParam && $this->useDevAssets()) {
             $url = static::addParamToURL($url, $this->devAssetsKey, "");

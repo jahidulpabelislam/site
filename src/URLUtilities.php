@@ -52,7 +52,7 @@ trait URLUtilities {
         return static::addTrailingSlash(static::addLeadingSlash($url));
     }
 
-    public static function makeURL(string $domain, string $relativeURL): string {
+    public static function formatURL(string $domain, string $relativeURL): string {
         // Just strip these off
         $indexes = [
             "index.php",
