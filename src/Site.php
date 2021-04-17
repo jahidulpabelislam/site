@@ -83,7 +83,7 @@ class Site implements Brand {
         return $this->domain;
     }
 
-    public function makeURL(string $relativeURL, bool $isFull = false, bool $addDevAssetsParam = true) : string {
+    public function makeURL(string $relativeURL, bool $addDevAssetsParam = true, bool $isFull = false) : string {
         $domain = $isFull ? $this->getDomain() : "";
 
         $url = static::formatURL($domain, $relativeURL);
@@ -106,7 +106,7 @@ class Site implements Brand {
             $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         }
 
-        return $this->makeURL($this->currentURL, $isFull, false);
+        return $this->makeURL($this->currentURL, false, $isFull);
     }
 
 }
