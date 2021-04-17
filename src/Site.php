@@ -4,6 +4,10 @@ namespace JPI;
 
 class Site implements Brand {
 
+    use URLUtilities {
+        makeURL as makeURLTrait;
+    }
+
     private static $instance;
 
     protected $environment = null;
@@ -34,12 +38,7 @@ class Site implements Brand {
             return $src;
         }
 
-        $query = parse_url($src, PHP_URL_QUERY);
-        if (empty($query)) {
-            return "$src?v=$ver";
-        }
-
-        return "$src&v=$ver";
+        return static::addParamToURL($src, "v", $ver);
     }
 
     public function renderFavicons(): void {
@@ -62,6 +61,19 @@ class Site implements Brand {
     }
 
     /**
+     * @return bool Whether or not the param was set by user on page view
+     */
+    public function useDevAssets(): bool {
+        if ($this->useDevAssets === null) {
+            $this->useDevAssets = isset($_GET[$this->devAssetsKey])
+                && !($_GET[$this->devAssetsKey] === "false" || $_GET[$this->devAssetsKey] === "0")
+            ;
+        }
+
+        return $this->useDevAssets;
+    }
+
+    /**
      * @return string Generate and return the local domain
      */
     public function getDomain(): string {
@@ -73,30 +85,30 @@ class Site implements Brand {
         return $this->domain;
     }
 
+    public function makeURL(string $relativeURL, bool $isFull = false, bool $addDevAssetsParam = true) : string {
+        $domain = $isFull ? $this->getDomain() : "";
+
+        $url = static::makeURLTrait($domain, $relativeURL);
+
+        if ($addDevAssetsParam && $this->useDevAssets()) {
+            $url = static::addParamToURL($url, $this->devAssetsKey, "");
+        }
+
+        return $url;
+    }
+
     /**
      * Generate and return the current requested page/URL.
      *
+     * @param $isFull bool
      * @return string
      */
-    public function getCurrentURL(): string {
+    public function getCurrentURL(bool $isFull = false): string {
         if ($this->currentURL === null) {
             $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         }
 
-        return $this->currentURL;
-    }
-
-    /**
-     * @return bool Whether or not the param was set by user on page view
-     */
-    public function useDevAssets(): bool {
-        if ($this->useDevAssets === null) {
-            $this->useDevAssets = isset($_GET[$this->devAssetsKey])
-                && !($_GET[$this->devAssetsKey] === "false" || $_GET[$this->devAssetsKey] === "0")
-            ;
-        }
-
-        return $this->useDevAssets;
+        return $this->makeURL($this->currentURL, $isFull, false);
     }
 
 }
