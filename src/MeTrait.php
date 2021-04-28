@@ -6,11 +6,11 @@ use DateTime;
 
 trait MeTrait {
 
-    protected $dateStarted;
-    protected $yearStarted;
+    protected $dateStarted = null;
+    protected $yearStarted = null;
 
     public function getDateStarted(): DateTime {
-        if (!$this->dateStarted) {
+        if (is_null($this->dateStarted)) {
             $this->dateStarted = new DateTime(self::START_DATE);
         }
 
@@ -18,9 +18,9 @@ trait MeTrait {
     }
 
     public function getYearStarted(): string {
-        if (!$this->yearStarted) {
-            $dateStartedDate = $this->getDateStarted();
-            $this->yearStarted = $dateStartedDate->format("Y");
+        if (is_null($this->yearStarted)) {
+            $date = $this->getDateStarted();
+            $this->yearStarted = $date->format("Y");
         }
 
         return $this->yearStarted;
