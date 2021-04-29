@@ -10,10 +10,19 @@ const cleanCss = require("gulp-clean-css");
 const autoPrefix = require("gulp-autoprefixer");
 
 const sass = require("gulp-sass");
+const sassVariables = require("gulp-sass-variables");
 
 const livereload = require("gulp-livereload");
 
 const { jsDir, jsDevDir, cssDir, scssDir } = require("./config");
+
+const colourVariables = {};
+
+var coloursJson = require('./vendor/jpi/site/assets/colours.json');
+
+for (const colour in coloursJson) {
+    colourVariables[`$${colour}`] = coloursJson[colour];
+}
 
 let defaultTasks = [];
 
@@ -47,6 +56,7 @@ gulp.task("scripts", function() {
 defaultTasks.push("sass");
 gulp.task("sass", function() {
     return gulp.src(`${scssDir}/*.scss`)
+               .pipe(sassVariables(colourVariables))
                .pipe(sass().on("error", sass.logError))
                .pipe(gulp.dest(`${cssDir}/`))
                .pipe(livereload());
