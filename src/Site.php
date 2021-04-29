@@ -24,8 +24,12 @@ class Site implements Brand {
     }
 
     public function getColours(): array {
-        $colours = file_get_contents(__DIR__ . "/../assets/colours.json");
-        return json_decode($colours, true);
+        if (is_null($this->colours)) {
+            $colours = file_get_contents(__DIR__ . "/../assets/colours.json");
+            $this->colours = json_decode($colours, true);
+        }
+
+        return $this->colours;
     }
 
     public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
