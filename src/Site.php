@@ -16,7 +16,7 @@ class Site implements Brand {
     protected $colours = null;
 
     public static function get() {
-        if (!static::$instance) {
+        if (is_null(static::$instance)) {
             static::$instance = new static();
         }
 
@@ -53,7 +53,7 @@ class Site implements Brand {
     }
 
     public function getEnvironment(): string {
-        if ($this->environment === null) {
+        if (is_null($this->environment)) {
             $this->environment = getenv("APPLICATION_ENV") ?? "production";
         }
 
@@ -68,7 +68,7 @@ class Site implements Brand {
      * @return bool Whether or not the param was set by user on page view
      */
     public function useDevAssets(): bool {
-        if ($this->useDevAssets === null) {
+        if (is_null($this->useDevAssets)) {
             $this->useDevAssets = isset($_GET[$this->devAssetsKey])
                 && !($_GET[$this->devAssetsKey] === "false" || $_GET[$this->devAssetsKey] === "0")
             ;
@@ -81,7 +81,7 @@ class Site implements Brand {
      * @return string Generate and return the local domain
      */
     public function getDomain(): string {
-        if ($this->domain === null) {
+        if (is_null($this->domain)) {
             $protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http";
             $this->domain = "$protocol://" . $_SERVER["SERVER_NAME"];
         }
@@ -108,7 +108,7 @@ class Site implements Brand {
      * @return string
      */
     public function getCurrentURL(bool $isFull = false): string {
-        if ($this->currentURL === null) {
+        if (is_null($this->currentURL)) {
             $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         }
 
