@@ -13,6 +13,7 @@ class Site implements Brand {
     protected $devAssetsKey = "dev_assets";
     protected $domain = null;
     protected $currentURL = null;
+    protected $colours = null;
 
     public static function get() {
         if (!static::$instance) {
@@ -20,6 +21,11 @@ class Site implements Brand {
         }
 
         return static::$instance;
+    }
+
+    public function getColours(): array {
+        $colours = file_get_contents(__DIR__ . "/../assets/colours.json");
+        return json_decode($colours, true);
     }
 
     public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
