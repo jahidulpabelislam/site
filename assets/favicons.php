@@ -17,8 +17,8 @@ $root = __DIR__ . "/..";
 <link rel="icon" type="image/png" sizes="16x16" href="<?php echo self::asset("/assets/favicons/favicon-16x16.png", null, $root); ?>" />
 <link rel="manifest" href="<?php echo self::asset("/assets/favicons/site.webmanifest", null, $root); ?>" />
 <link rel="mask-icon" href="<?php echo self::asset("/assets/favicons/safari-pinned-tab.svg", null, $root); ?>" color="<?php echo self::COLOUR ?>" />
-<link rel="shortcut icon" href="<?php echo self::asset("/favicon.ico", null, $root); ?>" />
-<meta name="msapplication-TileColor" content="<?php echo self::COLOUR ?>" />
+<link rel="shortcut icon" href="<?php echo self::asset("/assets/favicons/favicon.ico", null, $root); ?>" />
+<meta name="msapplication-TileColor" content="#ffffff" />
 <meta name="msapplication-TileImage" content="<?php echo self::asset("/assets/favicons/mstile-144x144.png", null, $root); ?>" />
 <meta name="msapplication-config" content="<?php echo self::asset("/assets/favicons/browserconfig.xml", null, $root); ?>" />
-<meta name="theme-color" content="#f5f5f5" />
+<meta name="theme-color" content="#ffffff" />
