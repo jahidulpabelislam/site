@@ -18,7 +18,7 @@ const { jsDir, jsDevDir, cssDir, scssDir } = require("./config");
 
 const colourVariables = {};
 
-var coloursJson = require('./vendor/jpi/site/assets/colours.json');
+var coloursJson = require('../colours.json');
 
 for (const colour in coloursJson) {
     colourVariables[`$${colour}`] = coloursJson[colour];
