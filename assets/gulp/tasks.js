@@ -9,7 +9,7 @@ const uglify = require("gulp-uglify");
 const cleanCss = require("gulp-clean-css");
 const autoPrefix = require("gulp-autoprefixer");
 
-const sass = require("gulp-sass");
+const sass = require("gulp-sass")(require("node-sass"));
 const sassVariables = require("gulp-sass-variables");
 
 const livereload = require("gulp-livereload");
