@@ -20,7 +20,7 @@ const { jsDir, jsDevDir, cssDir, scssDir } = require("./config");
 
 const colourVariables = {};
 
-var coloursJson = require('../colours.json');
+var coloursJson = require("../colours.json");
 
 for (const colour in coloursJson) {
     colourVariables[`$${colour}`] = coloursJson[colour];
@@ -30,6 +30,11 @@ let defaultTasks = [];
 
 gulp.task("reload-listen", function(callback) {
     livereload.listen();
+    callback();
+});
+
+gulp.task("clean-js-folder", function(callback) {
+    del(`${jsDir}/**`, {force: true});
     callback();
 });
 
@@ -46,11 +51,6 @@ gulp.task("watch-js", function(callback) {
     callback();
 });
 
-gulp.task("clean-js", function(callback) {
-    del(`${jsDir}/**`, {force: true});
-    callback();
-});
-
 gulp.task("minify-js", function() {
     return gulp.src([`${jsDir}/*.js`, `!${jsDir}/*.min.js`])
                .pipe(rename({suffix: ".min"}))
@@ -59,12 +59,12 @@ gulp.task("minify-js", function() {
         ;
 });
 
-// Concatenate & minify JS
-defaultTasks.push("scripts");
-gulp.task("scripts", gulp.series(["clean-js", "compile-js", "minify-js"]));
+// Get JavaScript files ready for production
+defaultTasks.push("js");
+gulp.task("js", gulp.series(["clean-js-folder", "compile-js", "minify-js"]));
 
-defaultTasks.push("sass");
-gulp.task("sass", function() {
+defaultTasks.push("compile-css");
+gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
                .pipe(sassVariables(colourVariables))
                .pipe(sass().on("error", sass.logError))
@@ -73,18 +73,15 @@ gulp.task("sass", function() {
         ;
 });
 
-// Watch scss file changes to compile to css
+// Watch SCSS file changes to compile to CSS
 gulp.task("watch-scss", function(callback) {
-    gulp.watch(`${scssDir}/**/*.scss`, gulp.parallel("sass"));
+    gulp.watch(`${scssDir}/**/*.scss`, gulp.parallel("compile-css"));
     callback();
 });
 
-// Watch files For changes
-gulp.task("watch", gulp.series(["reload-listen", "sass", "compile-js", "watch-scss", "watch-js"]));
-
-// Minify stylesheets
-defaultTasks.push("stylesheets");
-gulp.task("stylesheets", function() {
+// Get CSS files ready for production
+defaultTasks.push("css");
+gulp.task("css", function() {
     return gulp.src([`${cssDir}/*.css`, `!${cssDir}/*.min.css`])
                .pipe(rename({suffix: ".min"}))
                .pipe(autoPrefix({remove: false}))
@@ -92,5 +89,8 @@ gulp.task("stylesheets", function() {
                .pipe(gulp.dest(`${cssDir}/`))
         ;
 });
+
+// Watch files for changes to then compile
+gulp.task("watch", gulp.series(["reload-listen", "compile-css", "compile-js", "watch-scss", "watch-js"]));
 
 gulp.task("default", gulp.series(defaultTasks));
