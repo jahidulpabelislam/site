@@ -70,7 +70,6 @@ gulp.task("clean-css-folder", function(callback) {
     callback();
 });
 
-defaultTasks.push("compile-css");
 gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
                .pipe(sassVariables(colourVariables))
