@@ -14,6 +14,8 @@ const sassVariables = require("gulp-sass-variables");
 
 const livereload = require("gulp-livereload");
 
+const del = require("del");
+
 const { jsDir, jsDevDir, cssDir, scssDir } = require("./config");
 
 const colourVariables = {};
@@ -31,7 +33,6 @@ gulp.task("reload-listen", function(callback) {
     callback();
 });
 
-defaultTasks.push("compile-js");
 gulp.task("compile-js", function() {
     return gulp.src(`${jsDevDir}/*.js`)
         .pipe(include())
@@ -44,14 +45,21 @@ gulp.task("watch-js", function(callback) {
     callback();
 });
 
-// Concatenate & minify JS
-defaultTasks.push("scripts");
-gulp.task("scripts", function() {
+gulp.task("clean-js", function(callback) {
+    del(`${jsDir}/**`, {force: true});
+    callback();
+});
+
+gulp.task("minify-js", function() {
     return gulp.src([`${jsDir}/*.js`, `!${jsDir}/*.min.js`])
                .pipe(rename({suffix: ".min"}))
                .pipe(uglify())
                .pipe(gulp.dest(`${jsDir}/`));
 });
+
+// Concatenate & minify JS
+defaultTasks.push("scripts");
+gulp.task("scripts", gulp.series(["clean-js", "compile-js", "minify-js"]));
 
 defaultTasks.push("sass");
 gulp.task("sass", function() {
