@@ -99,7 +99,7 @@ class Site implements Brand {
         $url = static::formatURL($domain, $relativeURL);
 
         if ($addDevAssetsParam && $this->useDevAssets()) {
-            $url = static::addParamToURL($url, $this->devAssetsKey, "");
+            $url = static::addParamToURL($url, $this->devAssetsKey);
         }
 
         return $url;

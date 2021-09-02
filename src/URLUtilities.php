@@ -4,13 +4,18 @@ namespace JPI;
 
 trait URLUtilities {
 
-    protected static function addParamToURL(string $url, string $key, string $value): string {
+    protected static function addParamToURL(string $url, string $key, string $value = null): string {
         $query = parse_url($url, PHP_URL_QUERY);
+
+        $param = $key;
+        if ($value) {
+            $param .= "=$value" ;
+        }
         if (empty($query)) {
-            return "$url?$key=$value";
+            return "$url?$param";
         }
 
-        return "$url&$key=$value";
+        return "$url&$param";
     }
 
     public static function removeSlashes(string $value): string {
