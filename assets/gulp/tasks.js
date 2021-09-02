@@ -35,9 +35,10 @@ gulp.task("reload-listen", function(callback) {
 
 gulp.task("compile-js", function() {
     return gulp.src(`${jsDevDir}/*.js`)
-        .pipe(include())
-        .pipe(gulp.dest(`${jsDir}/`))
-        .pipe(livereload());
+               .pipe(include())
+               .pipe(gulp.dest(`${jsDir}/`))
+               .pipe(livereload())
+        ;
 });
 
 gulp.task("watch-js", function(callback) {
@@ -54,7 +55,8 @@ gulp.task("minify-js", function() {
     return gulp.src([`${jsDir}/*.js`, `!${jsDir}/*.min.js`])
                .pipe(rename({suffix: ".min"}))
                .pipe(uglify())
-               .pipe(gulp.dest(`${jsDir}/`));
+               .pipe(gulp.dest(`${jsDir}/`))
+        ;
 });
 
 // Concatenate & minify JS
@@ -67,7 +69,8 @@ gulp.task("sass", function() {
                .pipe(sassVariables(colourVariables))
                .pipe(sass().on("error", sass.logError))
                .pipe(gulp.dest(`${cssDir}/`))
-               .pipe(livereload());
+               .pipe(livereload())
+        ;
 });
 
 // Watch scss file changes to compile to css
@@ -86,7 +89,8 @@ gulp.task("stylesheets", function() {
                .pipe(rename({suffix: ".min"}))
                .pipe(autoPrefix({remove: false}))
                .pipe(cleanCss({compatibility: "ie8"}))
-               .pipe(gulp.dest(`${cssDir}/`));
+               .pipe(gulp.dest(`${cssDir}/`))
+        ;
 });
 
 gulp.task("default", gulp.series(defaultTasks));
