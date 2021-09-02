@@ -40,7 +40,9 @@ gulp.task("clean-js-folder", function(callback) {
 
 gulp.task("compile-js", function() {
     return gulp.src(`${jsDevDir}/*.js`)
-               .pipe(include())
+               .pipe(include({
+                   hardFail: true,
+               }))
                .pipe(gulp.dest(`${jsDir}/`))
                .pipe(livereload())
         ;
