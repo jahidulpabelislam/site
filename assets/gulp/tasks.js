@@ -34,7 +34,7 @@ gulp.task("reload-listen", function(callback) {
 });
 
 gulp.task("clean-js-folder", function(callback) {
-    del(`${jsDir}/**`, {force: true});
+    del(`${jsDir}/*.js`);
     callback();
 });
 
@@ -66,7 +66,7 @@ defaultTasks.push("js");
 gulp.task("js", gulp.series(["clean-js-folder", "compile-js", "minify-js"]));
 
 gulp.task("clean-css-folder", function(callback) {
-    del(`${cssDir}/**`, {force: true});
+    del(`${cssDir}/*.css`);
     callback();
 });
 
