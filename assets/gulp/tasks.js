@@ -11,12 +11,13 @@ const autoPrefix = require("gulp-autoprefixer");
 
 const sass = require("gulp-sass")(require("node-sass"));
 const sassVariables = require("gulp-sass-variables");
+const jsonImporter = require("node-sass-json-importer");
 
 const livereload = require("gulp-livereload");
 
 const del = require("del");
 
-const { jsDir, jsDevDir, cssDir, scssDir } = require("./config");
+const { devDir, jsDir, jsDevDir, cssDir, scssDir } = require("./config");
 
 const colourVariables = {};
 
@@ -73,7 +74,16 @@ gulp.task("clean-css-folder", function(callback) {
 gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
                .pipe(sassVariables(colourVariables))
-               .pipe(sass().on("error", sass.logError))
+               .pipe(
+                   sass({
+                       importer: jsonImporter(),
+                       sourceStyle: "nested",
+                       includePaths: [
+                           `${devDir}/config`,
+                       ],
+                   })
+                   .on("error", sass.logError)
+               )
                .pipe(gulp.dest(`${cssDir}/`))
                .pipe(livereload())
         ;

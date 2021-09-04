@@ -7,6 +7,7 @@ const cssDir = `${publicAssetsDir}/css`;
 const scssDir = `${devDir}/scss`;
 
 module.exports = {
+    devDir: devDir,
     assetsDir: assetsDir,
     publicAssetsDir: publicAssetsDir,
     jsDir: jsDir,
