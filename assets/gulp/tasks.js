@@ -1,6 +1,8 @@
 const gulp = require("gulp");
 
-const include = require("gulp-include")
+const include = require("gulp-include");
+
+const sourcemaps = require("gulp-sourcemaps");
 
 const rename = require("gulp-rename");
 
@@ -41,9 +43,11 @@ gulp.task("clean-js-folder", function(callback) {
 
 gulp.task("compile-js", function() {
     return gulp.src(`${jsDevDir}/*.js`)
+               .pipe(sourcemaps.init())
                .pipe(include({
                    hardFail: true,
                }))
+               .pipe(sourcemaps.write("maps/"))
                .pipe(gulp.dest(`${jsDir}/`))
                .pipe(livereload())
         ;
@@ -73,6 +77,7 @@ gulp.task("clean-css-folder", function(callback) {
 
 gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
+               .pipe(sourcemaps.init())
                .pipe(sassVariables(colourVariables))
                .pipe(
                    sass({
@@ -84,6 +89,7 @@ gulp.task("compile-css", function() {
                    })
                    .on("error", sass.logError)
                )
+               .pipe(sourcemaps.write("maps/"))
                .pipe(gulp.dest(`${cssDir}/`))
                .pipe(livereload())
         ;
