@@ -26,7 +26,7 @@ const colourVariables = {};
 var coloursJson = require("../colours.json");
 
 for (const colour in coloursJson) {
-    colourVariables[`$${colour}`] = coloursJson[colour];
+    colourVariables[`$${colour}-colour`] = coloursJson[colour];
 }
 
 let defaultTasks = [];
