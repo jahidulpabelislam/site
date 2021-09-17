@@ -12,7 +12,7 @@ const cleanCss = require("gulp-clean-css");
 const autoPrefix = require("gulp-autoprefixer");
 
 const sass = require("gulp-sass")(require("node-sass"));
-const sassVariables = require("gulp-sass-variables");
+const sassVars = require("gulp-sass-vars");
 const jsonImporter = require("node-sass-json-importer");
 
 const livereload = require("gulp-livereload");
@@ -26,7 +26,7 @@ const colourVariables = {};
 var coloursJson = require("../colours.json");
 
 for (const colour in coloursJson) {
-    colourVariables[`$${colour}-colour`] = coloursJson[colour];
+    colourVariables[`${colour}-colour`] = coloursJson[colour];
 }
 
 let defaultTasks = [];
@@ -78,7 +78,7 @@ gulp.task("clean-css-folder", function(callback) {
 gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
                .pipe(sourcemaps.init())
-               .pipe(sassVariables(colourVariables))
+               .pipe(sassVars(colourVariables))
                .pipe(
                    sass({
                        importer: jsonImporter(),
