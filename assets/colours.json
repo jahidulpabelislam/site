@@ -1,3 +1,5 @@
 {
-    "brand": "#0078c9"
+    "brand": "#0078c9",
+    "brand-dark": "#006AB0",
+    "brand-light": "#0081D6"
 }
