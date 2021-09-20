@@ -2,7 +2,8 @@
     "name": "jpi/site",
     "description": "Personal library with reusable bits for my sites.",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
