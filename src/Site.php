@@ -25,7 +25,7 @@ class Site implements Brand {
 
     public function getColours(): array {
         if (is_null($this->colours)) {
-            $colours = file_get_contents(__DIR__ . "/../assets/colours.json");
+            $colours = file_get_contents(__DIR__ . "/../config/colours.json");
             $this->colours = json_decode($colours, true);
         }
 
