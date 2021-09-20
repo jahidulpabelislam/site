@@ -75,5 +75,4 @@ trait URLUtilities {
         $relativeURL = static::addSlashes($relativeURL);
         return $domain . $relativeURL;
     }
-
 }

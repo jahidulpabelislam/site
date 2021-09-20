@@ -3,7 +3,5 @@
 namespace JPI;
 
 interface Brand {
-
-    public const COLOUR = "#0078c9";
-
+    public function getBrandColour(): string;
 }

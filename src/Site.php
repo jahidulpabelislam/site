@@ -23,15 +23,6 @@ class Site implements Brand {
         return static::$instance;
     }
 
-    public function getColours(): array {
-        if (is_null($this->colours)) {
-            $colours = file_get_contents(__DIR__ . "/../config/colours.json");
-            $this->colours = json_decode($colours, true);
-        }
-
-        return $this->colours;
-    }
-
     public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
         if ($ver === null) {
             $ver = "1"; // Default
@@ -119,4 +110,16 @@ class Site implements Brand {
         return $this->makeURL($this->currentURL, false, $isFull);
     }
 
+    public function getColours(): array {
+        if (is_null($this->colours)) {
+            $colours = file_get_contents(__DIR__ . "/../config/colours.json");
+            $this->colours = json_decode($colours, true);
+        }
+
+        return $this->colours;
+    }
+
+    public function getBrandColour(): string {
+        return $this->getColours()['brand'];
+    }
 }

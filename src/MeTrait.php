@@ -25,5 +25,4 @@ trait MeTrait {
 
         return $this->yearStarted;
     }
-
 }
