@@ -21,12 +21,16 @@ const del = require("del");
 
 const { devDir, jsDir, jsDevDir, cssDir, scssDir } = require("./config");
 
-const colourVariables = {};
+const scssVariables = {};
 
-var coloursJson = require("../config/colours.json");
+var colours = require("../config/colours.json");
+for (const colour in colours) {
+    scssVariables[`${colour}-colour`] = colours[colour];
+}
 
-for (const colour in coloursJson) {
-    colourVariables[`${colour}-colour`] = coloursJson[colour];
+var breakpoints = require("../config/breakpoints.json");
+for (const breakpoint in breakpoints) {
+    scssVariables[`${breakpoint}-width`] = breakpoints[breakpoint];
 }
 
 let defaultTasks = [];
@@ -78,7 +82,7 @@ gulp.task("clean-css-folder", function(callback) {
 gulp.task("compile-css", function() {
     return gulp.src(`${scssDir}/*.scss`)
                .pipe(sourcemaps.init())
-               .pipe(sassVars(colourVariables))
+               .pipe(sassVars(scssVariables))
                .pipe(
                    sass({
                        importer: jsonImporter(),
