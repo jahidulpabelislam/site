@@ -9,7 +9,7 @@ trait URLUtilities {
 
         $param = $key;
         if ($value) {
-            $param .= "=$value" ;
+            $param .= "=$value";
         }
         if (empty($query)) {
             return "$url?$param";

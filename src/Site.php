@@ -84,7 +84,7 @@ class Site implements Brand {
         return $this->domain;
     }
 
-    public function makeURL(string $relativeURL, bool $addDevAssetsParam = true, bool $isFull = false) : string {
+    public function makeURL(string $relativeURL, bool $addDevAssetsParam = true, bool $isFull = false): string {
         $domain = $isFull ? $this->getDomain() : "";
 
         $url = static::formatURL($domain, $relativeURL);
