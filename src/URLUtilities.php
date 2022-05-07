@@ -73,7 +73,7 @@ trait URLUtilities {
 
         $domain = static::removeTrailingSlash($domain);
 
-        if ($relativeURL === "/") {
+        if (in_array($relativeURL, ["", "/"])) {
             return $domain;
         }
 
