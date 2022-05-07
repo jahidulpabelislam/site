@@ -44,6 +44,7 @@ class Site implements Brand {
         ob_start();
         include_once __DIR__ . "/../partials/favicons.php";
         $favicons = ob_get_contents();
+        ob_end_clean();
         echo $favicons;
     }
 
