@@ -72,7 +72,11 @@ trait URLUtilities {
         }
 
         $domain = static::removeTrailingSlash($domain);
-        $relativeURL = static::addSlashes($relativeURL);
-        return $domain . $relativeURL;
+
+        if ($relativeURL === "/") {
+            return $domain;
+        }
+
+        return $domain . static::addSlashes($relativeURL);
     }
 }
