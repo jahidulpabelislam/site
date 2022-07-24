@@ -6,13 +6,21 @@ use DateTime;
 
 trait MeTrait {
 
-    protected $dateStarted = null;
+    protected $startDate = null;
 
-    public function getDateStarted(): DateTime {
-        if (is_null($this->dateStarted)) {
-            $this->dateStarted = new DateTime(self::START_DATE);
+    /**
+     * @param bool $object
+     * @return DateTime|string
+     */
+    public function getStartDate(bool $object = true) {
+        if (!$object) {
+            return self::START_DATE;
         }
 
-        return $this->dateStarted;
+        if ($this->startDate === null) {
+            $this->startDate = new DateTime(self::START_DATE);
+        }
+
+        return $this->startDate;
     }
 }
