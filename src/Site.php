@@ -2,7 +2,7 @@
 
 namespace JPI;
 
-class Site implements Brand {
+class Site implements BrandInterface {
 
     use URLUtilities;
 

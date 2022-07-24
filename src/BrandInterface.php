@@ -2,7 +2,7 @@
 
 namespace JPI;
 
-interface Brand {
+interface BrandInterface {
 
     public function getBrandColour(): string;
 }

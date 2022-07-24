@@ -2,7 +2,7 @@
 
 namespace JPI;
 
-interface Me {
+interface MeInterface {
 
     public const NAME = "Jahidul Pabel Islam";
 
