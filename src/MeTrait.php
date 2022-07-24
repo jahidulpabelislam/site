@@ -7,7 +7,6 @@ use DateTime;
 trait MeTrait {
 
     protected $dateStarted = null;
-    protected $yearStarted = null;
 
     public function getDateStarted(): DateTime {
         if (is_null($this->dateStarted)) {
@@ -15,14 +14,5 @@ trait MeTrait {
         }
 
         return $this->dateStarted;
-    }
-
-    public function getYearStarted(): string {
-        if (is_null($this->yearStarted)) {
-            $date = $this->getDateStarted();
-            $this->yearStarted = $date->format("Y");
-        }
-
-        return $this->yearStarted;
     }
 }
