@@ -60,6 +60,10 @@ class Site implements BrandInterface {
         return $this->getEnvironment() === "production";
     }
 
+    public function isDevelopment(): bool {
+        return $this->getEnvironment() === "development";
+    }
+
     /**
      * @return bool Whether or not the param was set by user on page view
      */
