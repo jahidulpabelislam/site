@@ -3,7 +3,8 @@
     "description": "Personal library with reusable bits for my sites.",
     "require": {
         "php": "^7.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "jpi/utils": "0.x-dev"
     },
     "autoload": {
         "psr-4": {

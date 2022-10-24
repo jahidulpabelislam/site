@@ -2,11 +2,12 @@
 
 namespace JPI;
 
+use JPI\Utils\Singleton;
+
 class Site implements BrandInterface {
 
     use URLUtilities;
-
-    private static $instance;
+    use Singleton;
 
     protected $environment = null;
     protected $useDevAssets = null;
@@ -14,14 +15,6 @@ class Site implements BrandInterface {
     protected $domain = null;
     protected $currentURL = null;
     protected $colours = null;
-
-    public static function get() {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }
 
     public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
         if ($ver === null) {
