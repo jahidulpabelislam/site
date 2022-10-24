@@ -3,34 +3,51 @@
 namespace JPI;
 
 use JPI\Utils\Singleton;
+use JPI\Utils\URL;
 
 class Site implements BrandInterface {
 
-    use URLUtilities;
     use Singleton;
 
     protected $environment = null;
+
     protected $useDevAssets = null;
     protected $devAssetsKey = "dev_assets";
-    protected $domain = null;
+
     protected $currentURL = null;
+
     protected $colours = null;
 
     public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
         if ($ver === null) {
-            $ver = "1"; // Default
-
-            $filepath = $root . $src;
+            $filepath = URL::removeTrailingSlash($root) . URL::addLeadingSlash($src);
             if (file_exists($filepath)) {
                 $ver = date("mdYHi", filemtime($filepath));
             }
         }
 
         if (empty($ver)) {
-            return $src;
+            $ver = "1"; // Default
         }
 
-        return static::addParamToURL($src, "v", $ver);
+        $src = new URL($src);
+        $src->setParam("v", $ver);
+        return $src;
+    }
+
+    public static function formatURL(string $url): string {
+        $indexes = [
+            "index.php",
+            "index.html",
+        ];
+        foreach ($indexes as $index) {
+            $indexLength = strlen($index);
+            if (substr($url, -$indexLength) === $index) {
+                return substr($url, 0, -$indexLength);
+            }
+        }
+
+        return $url;
     }
 
     public function renderFavicons(): void {
@@ -71,24 +88,22 @@ class Site implements BrandInterface {
     }
 
     /**
-     * @return string Generate and return the local domain
+     * @return string Return the local domain
      */
     public function getDomain(): string {
-        if (is_null($this->domain)) {
-            $protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http";
-            $this->domain = "$protocol://" . $_SERVER["SERVER_NAME"];
-        }
-
-        return $this->domain;
+        return $_SERVER["SERVER_NAME"];
     }
 
-    public function makeURL(string $relativeURL, bool $addDevAssetsParam = true, bool $isFull = false): string {
-        $domain = $isFull ? $this->getDomain() : "";
+    public function makeURL(string $path, bool $addDevAssetsParam = true, bool $isFull = false): URL {
+        $url = new URL(static::formatURL($path));
 
-        $url = static::formatURL($domain, $relativeURL);
+        if ($isFull) {
+            $url->setScheme((!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http");
+            $url->setHost($this->getDomain());
+        }
 
         if ($addDevAssetsParam && $this->useDevAssets()) {
-            $url = static::addParamToURL($url, $this->devAssetsKey);
+            $url->setParam($this->devAssetsKey, "");
         }
 
         return $url;
@@ -98,9 +113,9 @@ class Site implements BrandInterface {
      * Generate and return the current requested page/URL.
      *
      * @param $isFull bool
-     * @return string
+     * @return URL
      */
-    public function getCurrentURL(bool $isFull = false): string {
+    public function getCurrentURL(bool $isFull = false): URL {
         if (is_null($this->currentURL)) {
             $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         }
