@@ -23,11 +23,13 @@ class Site implements BrandInterface {
             $filepath = URL::removeTrailingSlash($root) . URL::addLeadingSlash($src);
             if (file_exists($filepath)) {
                 $ver = date("mdYHi", filemtime($filepath));
+            } else {
+                $ver = "1";
             }
         }
 
-        if (empty($ver)) {
-            $ver = "1"; // Default
+        if (!$ver) {
+            return $src;
         }
 
         $src = new URL($src);
