@@ -33,7 +33,7 @@ class Site implements BrandInterface {
         }
 
         $src = new URL($src);
-        $src->setParam("v", $ver);
+        $src->setQueryParam("v", $ver);
         return $src;
     }
 
@@ -105,7 +105,7 @@ class Site implements BrandInterface {
         }
 
         if ($addDevAssetsParam && $this->useDevAssets()) {
-            $url->setParam($this->devAssetsKey, "");
+            $url->setQueryParam($this->devAssetsKey, "");
         }
 
         return $url;
