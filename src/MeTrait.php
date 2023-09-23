@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPI;
 
 use DateTime;
 
 trait MeTrait {
 
-    protected $startDate = null;
-    protected $professionalStartDate = null;
+    protected ?DateTime $startDate = null;
+    protected ?DateTime $professionalStartDate = null;
 
-    /**
-     * @param bool $object
-     * @return DateTime|string
-     */
-    public function getStartDate(bool $object = true) {
+    public function getStartDate(bool $object = true): DateTime|string {
         if (!$object) {
             return self::START_DATE;
         }
@@ -25,11 +23,7 @@ trait MeTrait {
         return $this->startDate;
     }
 
-    /**
-     * @param bool $object
-     * @return DateTime|string
-     */
-    public function getProfessionalStartDate(bool $object = true) {
+    public function getProfessionalStartDate(bool $object = true): DateTime|string {
         if (!$object) {
             return self::PROFESSIONAL_START_DATE;
         }

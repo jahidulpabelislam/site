@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JPI;
 
 use JPI\Utils\Singleton;
@@ -9,16 +11,16 @@ class Site implements BrandInterface {
 
     use Singleton;
 
-    protected $environment = null;
+    protected ?string $environment = null;
 
-    protected $useDevAssets = null;
-    protected $devAssetsKey = "dev_assets";
+    protected ?bool $useDevAssets = null;
+    protected string $devAssetsKey = "dev_assets";
 
-    protected $currentURL = null;
+    protected ?URL $currentURL = null;
 
-    protected $colours = null;
+    protected ?array $colours = null;
 
-    public static function asset(string $src, string $ver = null, string $root = PUBLIC_ROOT): string {
+    public static function asset(string $src, ?string $ver = null, string $root = PUBLIC_ROOT): URL {
         if ($ver === null) {
             $filepath = URL::removeTrailingSlash($root) . URL::addLeadingSlash($src);
             if (file_exists($filepath)) {
@@ -28,11 +30,12 @@ class Site implements BrandInterface {
             }
         }
 
+        $src = new URL($src);
+
         if (!$ver) {
             return $src;
         }
 
-        $src = new URL($src);
         $src->setQueryParam("v", $ver);
         return $src;
     }
@@ -77,7 +80,7 @@ class Site implements BrandInterface {
     }
 
     /**
-     * @return bool Whether or not the param was set by user on page view
+     * @return bool Whether the param was set by user on page view
      */
     public function useDevAssets(): bool {
         if (is_null($this->useDevAssets)) {
