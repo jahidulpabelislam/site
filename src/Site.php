@@ -17,7 +17,7 @@ class Site implements BrandInterface {
 
     protected ?array $colours = null;
 
-    public static function asset(string $src, ?string $ver = null, string $root = PUBLIC_ROOT): URL {
+    public static function asset(URL|string $src, ?string $ver = null, string $root = PUBLIC_ROOT): URL {
         if ($ver === null) {
             $filepath = URL::removeTrailingSlash($root) . URL::addLeadingSlash($src);
             if (file_exists($filepath)) {
@@ -27,7 +27,9 @@ class Site implements BrandInterface {
             }
         }
 
-        $src = new URL($src);
+        if (!$src instanceof URL) {
+            $src = new URL($src);
+        }
 
         if (!$ver) {
             return $src;
