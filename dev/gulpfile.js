@@ -11,9 +11,9 @@ const uglify = require("gulp-uglify");
 const cleanCss = require("gulp-clean-css");
 const autoPrefix = require("gulp-autoprefixer");
 
-const sass = require("gulp-sass")(require("node-sass"));
+const sass = require("gulp-sass")(require("sass-embedded"));
 const sassVars = require("gulp-sass-vars");
-const jsonImporter = require("node-sass-json-importer");
+const jsonImporter = require("sass-json-importer");
 
 const livereload = require("gulp-livereload");
 
