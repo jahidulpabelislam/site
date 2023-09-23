@@ -16,7 +16,7 @@ class Site implements BrandInterface {
     protected ?bool $useDevAssets = null;
     protected string $devAssetsKey = "dev_assets";
 
-    protected ?URL $currentURL = null;
+    protected ?string $currentURL = null;
 
     protected ?array $colours = null;
 
