@@ -4,8 +4,6 @@ const include = require("gulp-include");
 
 const sourcemaps = require("gulp-sourcemaps");
 
-const rename = require("gulp-rename");
-
 const uglify = require("gulp-uglify");
 
 const cleanCss = require("gulp-clean-css");
@@ -51,6 +49,7 @@ gulp.task("compile-js", function() {
                .pipe(include({
                    hardFail: true,
                }))
+               .pipe(uglify())
                .pipe(sourcemaps.write("maps/"))
                .pipe(gulp.dest(`${jsDir}/`))
                .pipe(livereload())
@@ -62,17 +61,9 @@ gulp.task("watch-js", function(callback) {
     callback();
 });
 
-gulp.task("minify-js", function() {
-    return gulp.src([`${jsDir}/*.js`, `!${jsDir}/*.min.js`])
-               .pipe(rename({suffix: ".min"}))
-               .pipe(uglify())
-               .pipe(gulp.dest(`${jsDir}/`))
-        ;
-});
-
 // Get JavaScript files ready for production
 defaultTasks.push("js");
-gulp.task("js", gulp.series(["clean-js-folder", "compile-js", "minify-js"]));
+gulp.task("js", gulp.series(["clean-js-folder", "compile-js"]));
 
 gulp.task("clean-css-folder", function(callback) {
     del(`${cssDir}/*.css`);
@@ -93,6 +84,8 @@ gulp.task("compile-css", function() {
                    })
                    .on("error", sass.logError)
                )
+               .pipe(autoPrefix({remove: false}))
+               .pipe(cleanCss({compatibility: "ie8"}))
                .pipe(sourcemaps.write("maps/"))
                .pipe(gulp.dest(`${cssDir}/`))
                .pipe(livereload())
@@ -105,18 +98,9 @@ gulp.task("watch-scss", function(callback) {
     callback();
 });
 
-gulp.task("minify-css", function() {
-    return gulp.src([`${cssDir}/*.css`, `!${cssDir}/*.min.css`])
-               .pipe(rename({suffix: ".min"}))
-               .pipe(autoPrefix({remove: false}))
-               .pipe(cleanCss({compatibility: "ie8"}))
-               .pipe(gulp.dest(`${cssDir}/`))
-        ;
-});
-
 // Get CSS files ready for production
 defaultTasks.push("css");
-gulp.task("css", gulp.series(["clean-css-folder", "compile-css", "minify-css"]));
+gulp.task("css", gulp.series(["clean-css-folder", "compile-css"]));
 
 // Watch files for changes to then compile
 gulp.task("watch", gulp.series(["reload-listen", "compile-css", "compile-js", "watch-scss", "watch-js"]));

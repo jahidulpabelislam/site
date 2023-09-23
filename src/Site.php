@@ -13,9 +13,6 @@ class Site implements BrandInterface {
 
     protected ?string $environment = null;
 
-    protected ?bool $useDevAssets = null;
-    protected string $devAssetsKey = "dev_assets";
-
     protected ?string $currentURL = null;
 
     protected ?array $colours = null;
@@ -80,35 +77,18 @@ class Site implements BrandInterface {
     }
 
     /**
-     * @return bool Whether the param was set by user on page view
-     */
-    public function useDevAssets(): bool {
-        if (is_null($this->useDevAssets)) {
-            $this->useDevAssets = isset($_GET[$this->devAssetsKey])
-                && !($_GET[$this->devAssetsKey] === "false" || $_GET[$this->devAssetsKey] === "0")
-            ;
-        }
-
-        return $this->useDevAssets;
-    }
-
-    /**
      * @return string Return the local domain
      */
     public function getDomain(): string {
         return $_SERVER["SERVER_NAME"];
     }
 
-    public function makeURL(string $path, bool $addDevAssetsParam = true, bool $isFull = false): URL {
+    public function makeURL(string $path, bool $isFull = false): URL {
         $url = new URL(static::formatURL($path));
 
         if ($isFull) {
             $url->setScheme((!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http");
             $url->setHost($this->getDomain());
-        }
-
-        if ($addDevAssetsParam && $this->useDevAssets()) {
-            $url->setQueryParam($this->devAssetsKey, "");
         }
 
         return $url;
@@ -125,7 +105,7 @@ class Site implements BrandInterface {
             $this->currentURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         }
 
-        return $this->makeURL($this->currentURL, false, $isFull);
+        return $this->makeURL($this->currentURL, $isFull);
     }
 
     public function getColours(): array {
